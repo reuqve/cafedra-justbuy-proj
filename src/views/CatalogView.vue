@@ -1,6 +1,7 @@
 <script setup>
   import { ref, onMounted } from "vue"
   import getProducts from "@/services/products"
+  import ProductCard from "@/components/ProductCard.vue"
 
   const products = ref([])
   const loading = ref(true)
@@ -33,11 +34,11 @@
       <h2>error fetch</h2>
     </div>
     <div v-else>
-      <div v-for="product in products" :key="product.id" class="products">
-        <h3>{{ product.name }}</h3>
-        <p>description: {{ product.description }}</p>
-        <p>price: {{ product.price }}</p>
-        <span>id {{ product.id }}</span>
+      <div class="products">
+        <ProductCard
+          v-for="product in products"
+          :key="product.id"
+          :product="product"/>
       </div>
     </div>
   </section>
