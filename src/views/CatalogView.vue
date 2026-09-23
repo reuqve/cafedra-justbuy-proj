@@ -2,12 +2,18 @@
   import { ref, onMounted } from "vue"
   import getProducts from "@/services/products"
   import ProductCard from "@/components/ProductCard.vue"
+  import Skeleton from "@/components/Skeleton.vue"
+  import EmptyState from "@/components/EmptyState.vue"
+  import ErrorState from "@/components/ErrorState.vue"
 
   const products = ref([])
   const loading = ref(true)
   const error = ref(false)
 
   const fetchProducts = async () => {
+    loading.value = true
+    error.value = false
+
     try {
       products.value = await getProducts();
     } catch (err) {
@@ -28,10 +34,15 @@
   <section>
     <h1>Catalog View</h1>
     <div v-if="loading">
-      <h2>loading...</h2>
+      <Skeleton/>
     </div>
     <div v-else-if="error">
-      <h2>error fetch</h2>
+      <ErrorState
+        @retry="fetchProducts"
+      />
+    </div>
+    <div v-else-if="products.length === 0">
+      <EmptyState/>
     </div>
     <div v-else>
       <div class="products">
