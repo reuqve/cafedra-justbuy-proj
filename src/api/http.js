@@ -5,4 +5,14 @@ const http = axios.create({
     timeout: 10000,
   })
 
+http.interceptors.request.use((config) => {
+  const token = localStorage.getItem('user_token');
+
+  if(token != null) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+})
+
 export default http;
