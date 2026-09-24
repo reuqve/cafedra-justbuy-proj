@@ -15,22 +15,34 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      guestOnly: true
+    }
   },
   {
     path: '/signup',
     name: 'Registration',
-    component: RegistrationView
+    component: RegistrationView,
+    meta: {
+      guestOnly: true
+    }
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: CartView
+    component: CartView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/orders',
     name: 'Orders',
-    component: OrdersView
+    component: OrdersView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/:pathMatch(.*)*',
@@ -44,4 +56,16 @@ const router = createRouter({
   routes,
 })
 
+router.beforeEach((to) => {
+  const token = localStorage.getItem('user_token')
+  if(token == undefined || token == null || token == "undefined") {
+    localStorage.removeItem('user_token')
+  }
+  if(to.meta.requiresAuth && !token) {
+    return { path: '/login' }
+  }
+  if(to.meta.guestOnly && token) {
+    return { path: '/' }
+  }
+})
 export default router
