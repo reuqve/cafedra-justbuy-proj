@@ -26,7 +26,7 @@ const handleSubmit = async () => {
   try {
     const response = await authService.login(form)
     console.log(response)
-    const token = response.user_token
+    const token = response.data.user_token
     console.log(token)
     store.login(token)
 
