@@ -44,5 +44,7 @@ export const useCartStore = defineStore('cart', () => {
     items,
     loadCart,
     groupItems,
+    errorMessage,
+    loading
   }
 })
