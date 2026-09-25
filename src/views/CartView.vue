@@ -20,6 +20,8 @@ onMounted(() => {
       <p>price: {{ item.price }}</p>
       <p>quantity: {{ item.quantity || 0}}</p>
       <p>total: {{ item.price * item.quantity }}</p>
+      <button @click="cartStore.addToCart(item.product_id)">+</button>
+      <button @click="cartStore.deleteFromCart(item.id)">-</button>
     </div>
   </section>
 </template>

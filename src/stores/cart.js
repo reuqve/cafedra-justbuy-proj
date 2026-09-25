@@ -39,12 +39,24 @@ export const useCartStore = defineStore('cart', () => {
       }, {})
     )
   })
+  const addToCart = async (product_id) => {
+    const response = await cart.addProductToCart(product_id)
+    console.log(response.data)
+    await loadCart()
+  }
+  const deleteFromCart = async (id) => {
+    const response = await cart.deleteProductFromCart(id)
+    console.log(response.data)
+    await loadCart()
+  }
 
   return {
     items,
     loadCart,
     groupItems,
     errorMessage,
+    addToCart,
+    deleteFromCart,
     loading
   }
 })
