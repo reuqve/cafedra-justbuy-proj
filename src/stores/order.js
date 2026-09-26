@@ -10,9 +10,13 @@ export const useOrderStore = defineStore("orderStore", () => {
     items.value = response.data
     return response.data
   }
-
+  const createOrder = async () => {
+    const response = await order.postOrder()
+    return response.data
+  }
   return {
     getOrderList,
+    createOrder,
     items,
   }
 })
