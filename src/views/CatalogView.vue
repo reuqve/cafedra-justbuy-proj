@@ -1,10 +1,13 @@
 <script setup>
   import { ref, onMounted } from "vue"
   import getProducts from "@/services/products"
+  import { useCartStore } from "@/stores/cart.js"
   import ProductCard from "@/components/ProductCard.vue"
   import Skeleton from "@/components/Skeleton.vue"
   import EmptyState from "@/components/EmptyState.vue"
   import ErrorState from "@/components/ErrorState.vue"
+
+  const cartStore = useCartStore()
 
   const products = ref([])
   const loading = ref(true)
@@ -26,6 +29,7 @@
 
   onMounted(() => {
     fetchProducts()
+    cartStore.loadCart()
   })
 
 </script>
