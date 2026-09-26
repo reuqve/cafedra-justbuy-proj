@@ -54,7 +54,7 @@ export const useCartStore = defineStore('cart', () => {
       item => item.product_id === product_id
     )
     for(let i = 0; i < targetProduct.cart_id.length; i++) {
-      await deleteFromCart(targetProduct.cart_id[i])
+      await cart.deleteProductFromCart(targetProduct.cart_id[i])
     }
 
     await loadCart()
