@@ -8,5 +8,8 @@ async function login (data) {
   const response = await http.post('/login', data);
   return response.data;
 }
-
-export default { login, signup }
+async function logout () {
+  const response = await http.get('/logout');
+  return response.data
+}
+export default { login, signup, logout }
