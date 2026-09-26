@@ -59,6 +59,15 @@ export const useCartStore = defineStore('cart', () => {
 
     await loadCart()
   }
+  const totalSum = computed(() => {
+    let total = 0
+    for(let i = 0; i < groupItems.value.length; i++) {
+      total += groupItems.value[i].quantity*groupItems.value[i].price
+    }
+    console.log(total)
+    return total
+  })
+
 
   return {
     items,
@@ -68,6 +77,7 @@ export const useCartStore = defineStore('cart', () => {
     addToCart,
     deleteFromCart,
     deleteProductFromCart,
+    totalSum,
     loading
   }
 })

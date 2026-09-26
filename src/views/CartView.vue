@@ -24,6 +24,9 @@ onMounted(() => {
       <button @click="cartStore.deleteFromCart(item.id)">-</button>
       <button @click="cartStore.deleteProductFromCart(item.product_id)">Удалить</button>
     </div>
+    <div>
+      <h2>Total: <span>{{ cartStore.totalSum }}</span></h2>
+    </div>
   </section>
 </template>
 
