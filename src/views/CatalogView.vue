@@ -2,13 +2,17 @@
   import { ref, onMounted } from "vue"
   import getProducts from "@/services/products"
   import { useCartStore } from "@/stores/cart.js"
+  import { useAuthStore } from "@/stores/auth.js";
+  import { storeToRefs } from "pinia";
   import ProductCard from "@/components/ProductCard.vue"
   import Skeleton from "@/components/Skeleton.vue"
   import EmptyState from "@/components/EmptyState.vue"
   import ErrorState from "@/components/ErrorState.vue"
 
   const cartStore = useCartStore()
+  const authStore = useAuthStore()
 
+  const { isAuthenticated } = storeToRefs(authStore)
   const products = ref([])
   const loading = ref(true)
   const error = ref(false)
@@ -29,7 +33,7 @@
 
   onMounted(() => {
     fetchProducts()
-    cartStore.loadCart()
+    if(isAuthenticated.value) { cartStore.loadCart() }
   })
 
 </script>

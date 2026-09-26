@@ -1,6 +1,8 @@
 <script setup>
 import { computed } from "vue";
 import { useCartStore } from "@/stores/cart.js";
+import { useAuthStore } from "@/stores/auth.js";
+import { storeToRefs } from "pinia";
 
 const props = defineProps({
   product: {
@@ -10,6 +12,9 @@ const props = defineProps({
 })
 
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+
+const { isAuthenticated } = storeToRefs(authStore);
 
 const isAddedToCart = computed(() => {
   return cartStore.items.some(item => item.product_id === props.product.id)
@@ -29,7 +34,7 @@ const image_base_url = "http://lifestealer86.ru/";
     <p>description: {{ product.description }}</p>
     <p>price: {{ product.price }}</p>
     <span>id {{ product.id }}</span>
-    <button @click="addToCart(product.id)" :disabled="isAddedToCart">{{ !isAddedToCart ? "Добавить в корзину" : "В корзине" }}</button>
+    <button @click="addToCart(product.id)" v-show="isAuthenticated" :disabled="isAddedToCart">{{ !isAddedToCart ? "Добавить в корзину" : "В корзине" }}</button>
   </div>
 
 </template>
