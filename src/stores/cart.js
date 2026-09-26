@@ -49,6 +49,16 @@ export const useCartStore = defineStore('cart', () => {
     console.log(response.data)
     await loadCart()
   }
+  const deleteProductFromCart = async (product_id) => {
+    const targetProduct = groupItems.value.find(
+      item => item.product_id === product_id
+    )
+    for(let i = 0; i < targetProduct.cart_id.length; i++) {
+      await deleteFromCart(targetProduct.cart_id[i])
+    }
+
+    await loadCart()
+  }
 
   return {
     items,
@@ -57,6 +67,7 @@ export const useCartStore = defineStore('cart', () => {
     errorMessage,
     addToCart,
     deleteFromCart,
+    deleteProductFromCart,
     loading
   }
 })
