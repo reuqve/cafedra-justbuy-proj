@@ -2,6 +2,7 @@
 import { useAuthStore } from "@/stores/auth.js";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
+import AppToast from "@/components/AppToast.vue"
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -25,6 +26,7 @@ const logoutAction = async () => {
     <button @click="logoutAction()" v-show="isAuthenticated">Выйти</button>
   </header>
   <main>
+    <AppToast/>
     <router-view></router-view>
   </main>
 </template>

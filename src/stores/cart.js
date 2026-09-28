@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import cart from "@/services/cart.js"
 import { ref, computed } from 'vue'
+import { useToastStore } from "@/stores/toast.js"
 
 export const useCartStore = defineStore('cart', () => {
   const items = ref([])
   const errorMessage = ref(null)
   const loading = ref(false)
+  const toastStore = useToastStore()
 
   const loadCart = async () => {
     try {
@@ -40,9 +42,13 @@ export const useCartStore = defineStore('cart', () => {
     )
   })
   const addToCart = async (product_id) => {
-    const response = await cart.addProductToCart(product_id)
-    console.log(response.data)
-    await loadCart()
+    try {
+      const response = await cart.addProductToCart(product_id)
+      toastStore.showToast("Продукт добавлен в корзину", "success")
+      await loadCart()
+    } catch (error) {
+      toastStore.showToast("Не удалось добавить товар", "error")
+    }
   }
   const deleteFromCart = async (id) => {
     const response = await cart.deleteProductFromCart(id)
