@@ -3,14 +3,22 @@ import { useAuthStore } from "@/stores/auth.js";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import AppToast from "@/components/AppToast.vue"
+import { useToastStore } from "@/stores/toast.js";
 
 const authStore = useAuthStore();
 const router = useRouter();
+const toastStore = useToastStore();
+
 const { isAuthenticated } = storeToRefs(authStore);
 
 const logoutAction = async () => {
-  await authStore.logout();
-  router.push('/login')
+  try {
+    await authStore.logout();
+    toastStore.showToast("Выход из аккаунта", "success");
+    router.push('/login')
+  } catch {
+    toastStore.showToast("Ошибка выхода", "error")
+  }
 }
 </script>
 

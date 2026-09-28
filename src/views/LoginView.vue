@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue'
 import { useRouter } from "vue-router"
 import { useAuthStore } from "@/stores/auth.js"
 import authService from "@/services/auth.js"
+import { useToastStore } from "@/stores/toast.js"
 
 const form = reactive({
   email: "",
@@ -11,6 +12,7 @@ const form = reactive({
 
 const router = useRouter()
 const store = useAuthStore()
+const toastStore = useToastStore()
 
 const isSubmitting = ref(false)
 const errorMessage = ref('')
@@ -25,16 +27,16 @@ const handleSubmit = async () => {
 
   try {
     const response = await authService.login(form)
-    console.log(response)
     const token = response.data.user_token
-    console.log(token)
     store.login(token)
-
+    toastStore.showToast("Авторизация успешна!", "success")
     router.push("/")
-  } catch (error) {
-    errorMessage.value = error
-    isSubmitting.value = false
+  } catch {
+    errorMessage.value = "Ошибка авторизации"
+    toastStore.showToast("Ошибка авторизации", "error")
   }
+
+  isSubmitting.value = false
 }
 
 </script>

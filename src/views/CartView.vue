@@ -3,16 +3,24 @@ import {useCartStore} from "@/stores/cart.js";
 import {useOrderStore} from "@/stores/order.js";
 import {onMounted} from "vue";
 import { useRouter } from "vue-router";
+import { useToastStore } from "@/stores/toast.js"
 
 const cartStore = useCartStore();
 const orderStore = useOrderStore();
+const toastStore = useToastStore();
 
 const router = useRouter();
 
 const image_base_url = "http://lifestealer86.ru/"
 
 const makeOrder = async () => {
-  await orderStore.createOrder()
+  try {
+    await orderStore.createOrder()
+    toastStore.showToast("Заказ создан успешно", "success")
+  } catch {
+    toastStore.showToast("Ошибка создания заказа", "error")
+    return;
+  }
   await cartStore.loadCart()
 
   router.push('/orders')

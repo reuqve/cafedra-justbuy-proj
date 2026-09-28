@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useCartStore } from "@/stores/cart.js";
 import { useAuthStore } from "@/stores/auth.js";
 import { storeToRefs } from "pinia";
+import { useToastStore } from "@/stores/toast.js"
 
 const props = defineProps({
   product: {
@@ -13,6 +14,7 @@ const props = defineProps({
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
+const toastStore = useToastStore();
 
 const { isAuthenticated } = storeToRefs(authStore);
 
@@ -21,7 +23,12 @@ const isAddedToCart = computed(() => {
 })
 
 const addToCart = async (product_id) => {
-  await cartStore.addToCart(product_id)
+  try {
+    await cartStore.addToCart(product_id)
+    toastStore.showToast("Продукт добавлен в корзину", "success")
+  } catch {
+    toastStore.showToast("Не удалось добавить товар", "error")
+  }
 }
 
 const image_base_url = "http://lifestealer86.ru/";

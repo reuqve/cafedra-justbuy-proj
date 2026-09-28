@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import useAuth from "@/services/auth.js";
+import { useToastStore } from "@/stores/toast.js"
 
 const form = reactive({
   fio: "",
@@ -10,6 +11,7 @@ const form = reactive({
 })
 
 const router = useRouter()
+const toastStore = useToastStore()
 
 const errorMessage = ref("")
 const isSubmitting = ref(false);
@@ -24,8 +26,10 @@ const handleSubmit = async () => {
   isSubmitting.value = true
   try {
     await useAuth.signup(form)
+    toastStore.showToast("Регистрация успешна!", "success")
     router.push("/login")
   } catch (error) {
+    toastStore.showToast("Ошибка регистрации", "error")
     errorMessage.value = error.message
   } finally {
     isSubmitting.value = false
