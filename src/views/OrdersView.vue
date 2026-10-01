@@ -76,8 +76,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <section>
-    <h1>Orders View</h1>
+  <section class="text-zinc-200 h-screen max-w-7xl mx-auto pt-5">
+    <h1 class="mb-8 text-4xl">Оформленные заказы</h1>
     <div v-if="loading">
       <p>Loading...</p>
     </div>
@@ -87,12 +87,11 @@ onMounted(() => {
     <div v-else-if="groupOrderProducts().length === 0">
       <p>Empty state...</p>
     </div>
-    <div
-      v-else
-      v-for="order in groupOrderProducts()"
-      :key="order.order_id">
-        <h2>Номер заказа: №{{ order.order_id }}</h2>
-        <h3>Цена: {{ order.price }}</h3>
+    <div v-else class="grid grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <div
+        class="w-70 rounded-xl bg-zinc-900 p-5"
+        v-for="order in groupOrderProducts()"
+        :key="order.order_id">
         <ul>
           <li
             v-for="item in searchProducts(order)"
@@ -102,6 +101,11 @@ onMounted(() => {
               <p>Количество: {{ item.quantity }}</p>
           </li>
         </ul>
+        <div class="mt-6 flex justify-between border-t border-zinc-700 pt-4">
+          <h2>Номер заказа: №{{ order.order_id }}</h2>
+          <h3>Цена: {{ order.price }}</h3>
+        </div>
+      </div>
     </div>
   </section>
 </template>

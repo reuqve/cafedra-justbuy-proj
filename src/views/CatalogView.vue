@@ -40,7 +40,6 @@
 
 <template>
   <section>
-    <h1>Catalog View</h1>
     <div v-if="loading">
       <Skeleton/>
     </div>
@@ -52,12 +51,15 @@
     <div v-else-if="products.length === 0">
       <EmptyState/>
     </div>
-    <div v-else>
-      <div class="products">
+    <div v-else class="max-w-7xl mx-auto text-zinc-100">
+      <h1 class="mb-8 text-4xl pt-5">Каталог товаров</h1>
+      <div class="grid grid-cols-4 gap-8 pt-5">
         <ProductCard
           v-for="product in products"
           :key="product.id"
-          :product="product"/>
+          :product="product"
+          class="bg-zinc-900"
+        />
       </div>
     </div>
   </section>
