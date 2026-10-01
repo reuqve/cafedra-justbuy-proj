@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import CatalogView from '@/views/CatalogView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegistrationView from '@/views/RegistrationView.vue'
-import CartView from '@/views/CartView.vue'
+import CartDrawer from "@/components/CartDrawer.vue";
 import OrdersView from '@/views/OrdersView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
@@ -31,7 +31,10 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: CartView,
+    components: {
+      default: CatalogView,
+      drawer: CartDrawer,
+    },
     meta: {
       requiresAuth: true
     }

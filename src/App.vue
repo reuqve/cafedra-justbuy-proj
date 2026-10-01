@@ -26,30 +26,56 @@ const logoutAction = async () => {
   <header class="bg-zinc-800">
     <div class="max-w-7xl mx-auto flex items-center justify-between h-20 text-zinc-100">
       <RouterLink :to="{name:'Catalog'}">
-        <span>Просто купить</span>
+        <span class="hover:text-zinc-300 transition-colors duration-200">Просто купить</span>
       </RouterLink>
-      <RouterLink class="text-yellow-600 hover:text-yellow-700 transition-colors duration-200"
-                  :to="{name:'Login'}"
-                  v-show="!isAuthenticated">Войти</RouterLink>
-      <RouterLink class="text-yellow-600 hover:text-yellow-700 transition-colors duration-200"
-                  :to="{name:'Registration'}"
-                  v-show="!isAuthenticated">Регистрация</RouterLink>
-      <RouterLink class="text-yellow-600 hover:text-yellow-700 transition-colors duration-200"
-                  :to="{name:'Cart'}"
-                  v-show="isAuthenticated">Корзина</RouterLink>
-      <RouterLink class="text-yellow-600 hover:text-yellow-700 transition-colors duration-200"
-                  :to="{name:'Orders'}"
-                  v-show="isAuthenticated">Заказы</RouterLink>
-      <button
-        class="bg-blue-600 hover:bg-blue-400 w-30 h-10 rounded-2xl cursor-pointer mt-5 transition-colors duration-200"
-        @click="logoutAction()"
-        v-show="isAuthenticated">Выйти</button>
+      <div class="flex items-center gap-6">
+        <RouterLink class="text-zinc-200 hover:text-zinc-400 transition-colors duration-200"
+                    :to="{name:'Login'}"
+                    v-show="!isAuthenticated">Войти</RouterLink>
+        <RouterLink class="text-zinc-200 hover:text-zinc-400 transition-colors duration-200"
+                    :to="{name:'Registration'}"
+                    v-show="!isAuthenticated">Регистрация</RouterLink>
+        <RouterLink class="text-zinc-200 hover:text-zinc-400 transition-colors duration-200"
+                    :to="{name:'Cart'}"
+                    v-show="isAuthenticated">Корзина</RouterLink>
+        <RouterLink class="text-zinc-200 hover:text-zinc-400 transition-colors duration-200"
+                    :to="{name:'Orders'}"
+                    v-show="isAuthenticated">Заказы</RouterLink>
+        <button
+          class="bg-blue-600 hover:bg-blue-500 w-30 h-10 rounded-2xl cursor-pointer transition-colors duration-200"
+          @click="logoutAction()"
+          v-show="isAuthenticated">Выйти</button>
+      </div>
     </div>
   </header>
   <main class="bg-zinc-950">
     <AppToast/>
     <router-view></router-view>
   </main>
+  <router-view name="drawer" v-slot="{ Component }">
+    <Transition name="cart-drawer" :duration="300">
+      <component :is="Component" />
+    </Transition>
+  </router-view>
 </template>
 
-<style scoped></style>
+<style>
+
+.cart-drawer-enter-active .cart-overlay,
+.cart-drawer-leave-active .cart-overlay {
+  transition: opacity 0.3s ease-in-out;
+}
+.cart-drawer-enter-from .cart-overlay,
+.cart-drawer-leave-to .cart-overlay {
+  opacity: 0;
+}
+.cart-drawer-enter-active aside,
+.cart-drawer-leave-active aside {
+  transition: transform 0.3s ease-out;
+}
+
+.cart-drawer-enter-from aside,
+.cart-drawer-leave-to aside {
+  transform: translateX(100%);
+}
+</style>
