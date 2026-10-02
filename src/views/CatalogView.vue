@@ -54,7 +54,7 @@
       />
     </div>
     <div v-else-if="products.length === 0">
-      <EmptyState/>
+      <EmptyState message="Каталог товаров пуст" />
     </div>
     <div v-else class="">
       <div class="grid grid-cols-4 gap-8 pt-5">

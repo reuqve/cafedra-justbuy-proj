@@ -2,6 +2,8 @@
 import { useOrderStore } from "@/stores/order.js";
 import { onMounted, ref } from "vue";
 import getProducts from "@/services/products"
+import EmptyState from "@/components/EmptyState.vue";
+import Skeleton from "@/components/Skeleton.vue";
 
 const orderStore = useOrderStore();
 
@@ -78,14 +80,14 @@ onMounted(() => {
 <template>
   <section class="text-zinc-200 h-screen max-w-7xl mx-auto pt-5">
     <h1 class="mb-8 text-4xl">Оформленные заказы</h1>
-    <div v-if="loading">
-      <p>Loading...</p>
+    <div v-if="loading" class="grid grid-cols-3 gap-8 pt-5 animate-pulse">
+      <Skeleton v-for="n in 6" :key="n"/>
     </div>
     <div v-else-if="error">
       <p>Something went wrong</p>
     </div>
     <div v-else-if="groupOrderProducts().length === 0">
-      <p>Empty state...</p>
+      <EmptyState message="Заказов нет" />
     </div>
     <div v-else class="grid grid-cols-3 gap-8 max-w-7xl mx-auto">
       <div
