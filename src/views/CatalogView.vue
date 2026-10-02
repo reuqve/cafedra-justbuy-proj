@@ -39,9 +39,14 @@
 </script>
 
 <template>
-  <section>
+  <section class="max-w-7xl mx-auto text-zinc-100 h-screen">
+    <h1 class="mb-8 text-4xl pt-5">Каталог товаров</h1>
     <div v-if="loading">
-      <Skeleton/>
+      <div class="grid grid-cols-4 gap-8 pt-5 animate-pulse">
+        <Skeleton
+          v-for="n in 8" :key="n"
+        />
+      </div>
     </div>
     <div v-else-if="error">
       <ErrorState
@@ -51,8 +56,7 @@
     <div v-else-if="products.length === 0">
       <EmptyState/>
     </div>
-    <div v-else class="max-w-7xl mx-auto text-zinc-100">
-      <h1 class="mb-8 text-4xl pt-5">Каталог товаров</h1>
+    <div v-else class="">
       <div class="grid grid-cols-4 gap-8 pt-5">
         <ProductCard
           v-for="product in products"
