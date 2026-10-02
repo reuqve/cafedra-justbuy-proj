@@ -15,17 +15,18 @@
   const { isAuthenticated } = storeToRefs(authStore)
   const products = ref([])
   const loading = ref(true)
-  const error = ref(false)
+  const errorExist = ref(false)
+  const errorMessage = ref("")
 
   const fetchProducts = async () => {
     loading.value = true
-    error.value = false
+    errorExist.value = false
 
     try {
       products.value = await getProducts();
-    } catch (err) {
-      error.value = true
-      console.log(err)
+    } catch (error) {
+      errorExist.value = true
+      errorMessage.value = error.message
     } finally {
       loading.value = false
     }
@@ -39,7 +40,7 @@
 </script>
 
 <template>
-  <section class="max-w-7xl mx-auto text-zinc-100 h-screen">
+  <section class="max-w-7xl mx-auto text-zinc-100 h-full-screen">
     <h1 class="mb-8 text-4xl pt-5">Каталог товаров</h1>
     <div v-if="loading">
       <div class="grid grid-cols-4 gap-8 pt-5 animate-pulse">
@@ -48,8 +49,9 @@
         />
       </div>
     </div>
-    <div v-else-if="error">
+    <div v-else-if="errorExist">
       <ErrorState
+        :error="errorMessage"
         @retry="fetchProducts"
       />
     </div>

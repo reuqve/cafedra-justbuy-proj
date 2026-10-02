@@ -10,6 +10,7 @@ const orderStore = useOrderStore();
 const products = ref([])
 const loading = ref(true)
 const error = ref(false)
+const errorMessage = ref("")
 
 const fetchProducts = async () => {
   loading.value = true
@@ -19,7 +20,7 @@ const fetchProducts = async () => {
     products.value = await getProducts();
   } catch (err) {
     error.value = true
-    console.log(err)
+    errorMessage.value = err.message
   } finally {
     loading.value = false
   }
@@ -84,7 +85,7 @@ onMounted(() => {
       <Skeleton v-for="n in 6" :key="n"/>
     </div>
     <div v-else-if="error">
-      <p>Something went wrong</p>
+      <p class="text-red-400">{{ errorMessage }}</p>
     </div>
     <div v-else-if="groupOrderProducts().length === 0">
       <EmptyState message="Заказов нет" />

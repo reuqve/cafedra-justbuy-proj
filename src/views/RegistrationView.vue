@@ -62,8 +62,12 @@ const handleSubmit = async () => {
     toastStore.showToast("Регистрация успешна!", "success")
     router.push("/login")
   } catch (error) {
-    toastStore.showToast("Ошибка регистрации", "error")
-    errorMessage.value = error.message
+    errorMessage.value =
+      error.errors?.email?.[0] ||
+      error.errors?.password?.[0] ||
+      error.errors?.fio?.[0] ||
+      error.message
+    toastStore.showToast(errorMessage.value, "error")
   } finally {
     isSubmitting.value = false
   }

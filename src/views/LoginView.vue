@@ -31,9 +31,9 @@ const handleSubmit = async () => {
     store.login(token)
     toastStore.showToast("Авторизация успешна!", "success")
     router.push("/")
-  } catch {
-    errorMessage.value = "Ошибка авторизации"
-    toastStore.showToast("Ошибка авторизации", "error")
+  } catch(error) {
+    errorMessage.value = error.message
+    toastStore.showToast(error.message, "error")
   }
 
   isSubmitting.value = false
