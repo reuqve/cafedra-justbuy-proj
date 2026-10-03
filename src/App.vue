@@ -52,7 +52,12 @@ const logoutAction = async () => {
   <AppToast/>
 
   <main class="bg-zinc-950">
-    <router-view></router-view>
+
+    <router-view v-slot="{ Component }">
+      <Transition name="page" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </router-view>
   </main>
 
   <router-view name="drawer" v-slot="{ Component }">
@@ -64,6 +69,19 @@ const logoutAction = async () => {
 </template>
 
 <style>
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity .25s ease, transform .25s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
 
 .cart-drawer-enter-active .cart-overlay,
 .cart-drawer-leave-active .cart-overlay {
