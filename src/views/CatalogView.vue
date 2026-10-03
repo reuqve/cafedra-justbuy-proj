@@ -40,7 +40,7 @@
 </script>
 
 <template>
-  <section class="max-w-7xl mx-auto text-zinc-100 h-full-screen">
+  <section class="max-w-7xl mx-auto text-zinc-100 min-h-screen">
     <h1 class="mb-8 text-4xl pt-5">Каталог товаров</h1>
     <div v-if="loading">
       <div class="grid grid-cols-4 gap-8 pt-5 animate-pulse">

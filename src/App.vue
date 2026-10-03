@@ -48,14 +48,18 @@ const logoutAction = async () => {
       </div>
     </div>
   </header>
+
+  <AppToast/>
+
   <main class="bg-zinc-950">
-    <AppToast/>
     <router-view></router-view>
   </main>
+
   <router-view name="drawer" v-slot="{ Component }">
     <Transition name="cart-drawer" :duration="300">
       <component :is="Component" />
     </Transition>
+
   </router-view>
 </template>
 

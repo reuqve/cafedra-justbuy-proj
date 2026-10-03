@@ -20,6 +20,7 @@ http.interceptors.response.use((response) => {
 }, (error) => {
   const errorStatus = error.response?.status;
   const serverError = error.response?.data
+  const serverMessage = serverError?.message || serverError?.error.message
 
   let message = serverError?.message || error.message || "Произошла неизвестная ошибка";
   let validationErrors = serverError?.errors || null
