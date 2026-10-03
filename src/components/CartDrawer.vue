@@ -43,11 +43,6 @@ onMounted(() => {
     <aside class="relative z-10 w-full max-w-md h-full bg-zinc-900 flex flex-col">
       <div class="p-4">
         <button
-          class="bg-blue-600 px-6 py-3 font-semibold rounded-lg hover:bg-blue-500 transition-colors duration-200 cursor-pointer"
-          @click="makeOrder()">
-          Сделать заказ
-        </button>
-        <button
           class="cursor-pointer w-8 h-8 bg-zinc-800 rounded-lg hover:bg-zinc-700 transition-colors duration-200"
           @click="closeCart()">
           x

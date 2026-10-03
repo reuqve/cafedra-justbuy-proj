@@ -9,7 +9,7 @@ const toastStore = useToastStore()
   <Transition name="toast">
     <div
       v-if="toastStore.isShow"
-      class="fixed top-5 right-5 z-50 w-80 rounded-xl p-4 shadow-lg"
+      class="fixed top-5 right-5 z-51 w-80 rounded-xl p-4 shadow-lg"
       :class="{
         'bg-green-600': toastStore.type === 'success',
         'bg-red-600': toastStore.type === 'error'

@@ -20,9 +20,9 @@ http.interceptors.response.use((response) => {
 }, (error) => {
   const errorStatus = error.response?.status;
   const serverError = error.response?.data
-  const serverMessage = serverError?.message || serverError?.error.message
+  const serverMessage = serverError?.message || serverError?.error?.message
 
-  let message = serverError?.message || error.message || "Произошла неизвестная ошибка";
+  let message = serverMessage || error.message || "Произошла неизвестная ошибка";
   let validationErrors = serverError?.errors || null
 
   if(Array.isArray(validationErrors)) {
@@ -31,17 +31,17 @@ http.interceptors.response.use((response) => {
 
   switch (errorStatus) {
     case 401:
-      message = serverError?.message || "Неверный логин или пароль"
+      message = serverMessage || "Неверный логин или пароль"
       localStorage.removeItem('user_token');
       break;
     case 403:
-      message = serverError?.message || "Доступ запрещен"
+      message = serverMessage || "Доступ запрещен"
       break;
     case 404:
-      message = serverError?.message || "Ресурс не найден"
+      message = serverMessage || "Ресурс не найден"
       break;
     case 422:
-      message = serverError?.message || "Ошибка валидации данных"
+      message = serverMessage || "Ошибка валидации данных"
       break;
   }
   const customError = new Error(message)
